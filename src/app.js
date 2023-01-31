@@ -39,6 +39,8 @@ class TvApp {
     }
 
     renderCards = (shows) => {
+        this.viewElems.showsWrapper.innerHTML = '';
+
         for (const { show } of shows) {
             this.createShowCard(show)
         }
@@ -49,17 +51,32 @@ createShowCard = show => {
   
 
     const divCard = createDOMElem('div', 'card');
-    const img = createDOMElem('img', 'card-img-top', null, show.image.medium);
+    // const img = createDOMElem('img', 'card-img-top', null, show.image.medium);
     const divCardBody = createDOMElem('div', 'card-body');
     const h5 = createDOMElem('h5', 'card-title', show.name);
-    const p = createDOMElem('p', 'card-text', show.summary);
+    // const p = createDOMElem('p', 'card-text', show.summary);
     const btn = createDOMElem('button', 'btn btn-primary', 'Show details');
+
+    let img, p;
+    if (show.image) {
+        img = createDOMElem('img', 'card-img-top', null, show.image.medium);
+    }else{
+        img = createDOMElem('img', 'card-img-top', null, "https://via.placeholder.com/300");
+    }
+
+   
+    if (show.summary) {
+        p = createDOMElem('p', 'card-text', `${show.summary.slice(0, 80)}...`);
+    }else{
+        p = createDOMElem('p', 'card-text', "There is no summary fo this show yet.");
+    }
+
     
     divCard.appendChild(divCardBody)
-    divCard.appendChild(img)
-    divCard.appendChild(h5)
-    divCard.appendChild(p)
-    divCard.appendChild(btn)
+    divCardBody.appendChild(img)
+    divCardBody.appendChild(h5)
+    divCardBody.appendChild(p)
+    divCardBody.appendChild(btn)
 
     this.viewElems.showsWrapper.appendChild(divCard)
 
